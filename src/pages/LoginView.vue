@@ -169,7 +169,7 @@ const login = () => {
   align-items: stretch;
 }
 
-/* === Chap panel (Login form) === */
+
 .auth-left {
   flex: 1;
   max-width: 750px;
