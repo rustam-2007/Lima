@@ -42,15 +42,8 @@ const handleSelect = (key) => {
       <!-- Dark/Light Switch -->
       <n-switch v-model:value="isDark" />
 
-      <!-- Profil dropdown -->
-      <!-- <n-dropdown :options="options" @select="handleSelect">
-        <n-avatar
-          round
-          size="36"
-          src="https://avatars.githubusercontent.com/u/9919?s=200&v=4"
-          style="cursor: pointer"
-        />
-      </n-dropdown> -->
+    
+
     </div>
 
   </div>
