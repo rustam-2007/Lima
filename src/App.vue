@@ -1,34 +1,35 @@
 <script setup>
-import { RouterView } from 'vue-router'
-import { ref, provide } from 'vue'
-import { darkTheme, NConfigProvider } from 'naive-ui'
+import { RouterView } from "vue-router";
+import { ref, provide } from "vue";
+import { darkTheme, NConfigProvider } from "naive-ui";
 
-const isDark = ref(false)
-provide('isDark', isDark)
+const isDark = ref(false);
+provide("isDark", isDark);
 
 const darkThemeOverrides = {
   common: {
-    backgroundColor: '#1f2937', // тёмный фон
-    textColor1: '#ffffff',
+    backgroundColor: "#1f2937", // тёмный фон
+    textColor1: "#ffffff",
   },
-}
+};
 
 // Глобальные кастомные стили для Input и Tabs
 const themeOverrides = {
   Input: {
-    borderHover: '1px solid #4f46e5',
-    borderActive: '1px solid #22c55e',
-    boxShadowActive: '0 0 0 2px rgba(34,197,94,0.3)',
-    caretColor: '#22c55e',
-    colorFocus: '#22c55e',
+    borderHover: "1px solid #4f46e5",
+    borderActive: "1px solid #22c55e",
+    boxShadowActive: "0 0 0 2px rgba(34,197,94,0.3)",
+    caretColor: "#22c55e",
+    colorFocus: "#22c55e",
   },
-  Tabs: {
-    tabTextColor: '#000',
-    tabTextColorActive: '#22c55e',
-    tabBorder: '1px solid #e5e7eb',
-    tabBorderActive: '1px solid #22c55e',
-  },
-}
+ Tabs: {
+    tabColorSegment: "#3D7BF7",        // active tab background
+    tabBorderColor: "#3D7BF7",
+    tabTextColorActive: "#ffffff",     // ACTIVE matn
+    tabTextColor: "#000000",           // INACTIVE matn
+    tabTextColorHover: "#000000"
+  }
+};
 </script>
 
 <template>
@@ -70,4 +71,7 @@ const themeOverrides = {
   padding: 16px;
   overflow-y: auto;
 }
+
+
+
 </style>

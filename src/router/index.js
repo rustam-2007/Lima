@@ -25,6 +25,15 @@ const routes = [
       default: () => import('@/pages/AboutView.vue'),
     },
   },
+   {
+    path: '/detail',
+    name: 'detail',
+    components: {
+      LeftSidebar: () => import('@/components/SidebarMenuComponent.vue'),
+      TopNavbar: () => import('@/components/NavbarComponent.vue'),
+      default: () => import('@/pages/DetailView.vue'),
+    },
+  },
   {
     path: '/login',
     name: 'login',
