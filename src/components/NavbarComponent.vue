@@ -10,7 +10,7 @@ const isDark = inject('isDark')
 const options = [
   { label: 'Profil', key: 'profile' },
   { label: 'Sozlamalar', key: 'settings' },
-  { label: 'Chiqish', key: 'logout' }
+  { label: 'Chiqish', key: 'logout' },
 ]
 
 const handleSelect = (key) => {
@@ -20,7 +20,6 @@ const handleSelect = (key) => {
 
 <template>
   <div class="navbar">
-
     <!-- Logo yoki Title -->
     <div class="logo">
       <span>MyApp</span>
@@ -52,7 +51,6 @@ const handleSelect = (key) => {
         />
       </n-dropdown> -->
     </div>
-
   </div>
 </template>
 

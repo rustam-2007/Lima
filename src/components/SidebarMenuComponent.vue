@@ -22,75 +22,6 @@
         />
         <!-- <n-switch v-model:value="collapsed" /> -->
       </n-layout-sider>
-      <!-- Card wrapper -->
-      <div class="branch-card">
-        <!-- Chapdagi ko'k chiziq -->
-        <div class="branch-card__bar"></div>
-
-        <!-- Kontent -->
-        <div class="branch-card__content">
-          <!-- Yuqori qator: ikonka + nom -->
-          <div class="branch-card__header">
-            <div class="branch-card__company">
-              <span class="company-dot"></span>
-              <span class="company-name">ООО “Организации”</span>
-            </div>
-
-            <button class="edit-btn">✏️</button>
-          </div>
-
-          <h2 class="branch-title">Название филиала</h2>
-
-          <!-- INN -->
-          <div class="row">
-            <span class="label">ИНН</span>
-            <span class="value bold">984 921 005</span>
-          </div>
-
-          <!-- Gorod + Tel org -->
-          <div class="row two-cols">
-            <div>
-              <div class="label">Город</div>
-              <div class="value bold">Ташкент</div>
-            </div>
-            <div>
-              <div class="label">Телефон организации</div>
-              <div class="value bold">+998 (99) 576-1256</div>
-            </div>
-          </div>
-
-          <!-- Address org -->
-          <div class="row">
-            <div class="label">Адрес организации*</div>
-            <div class="value bold">Паркентская улица до 2x строк</div>
-          </div>
-
-          <!-- Responsible + phone -->
-          <div class="row two-cols">
-            <div>
-              <div class="label">Ответственный</div>
-              <div class="value bold">Миркамол</div>
-            </div>
-            <div>
-              <div class="label">Телефон ответ. лица</div>
-              <div class="value bold">+998 (99) 576-1256</div>
-            </div>
-          </div>
-
-          <!-- Delivery address -->
-          <div class="row">
-            <div class="label">Адрес доставки</div>
-            <div class="value bold">Паркентская улица до 2x строк</div>
-          </div>
-
-          <!-- Debt -->
-          <div class="row">
-            <div class="debt">Задолженность - <span>500 000 UZS</span></div>
-          </div>
-        </div>
-      </div>
-
-      <n-layout> </n-layout>
     </n-layout>
   </n-space>
 </template>
@@ -171,7 +102,6 @@ const menuOptions = [
         label: 'The past increases. The future recedes.',
         key: 'the-past-increases-the-future-recedes',
       },
-      {},
     ],
   },
 ]

@@ -21,6 +21,7 @@ const routes = [
     name: 'about',
     components: {
       LeftSidebar: () => import('@/components/SidebarMenuComponent.vue'),
+      TopNavbar: () => import('@/components/NavbarComponent.vue'),
       default: () => import('@/pages/AboutView.vue'),
     },
   },
