@@ -9,6 +9,7 @@
           strong
           size="large"
           secondary
+          @click="showModalFunc"
           type="primary"
           style="
             background-color: #3d7bf7;
@@ -28,13 +29,17 @@
         <n-icon><MdCash /></n-icon> Category
       </n-breadcrumb-item> -->
     </n-breadcrumb>
-
-    <n-tabs @update:value="tabChange" style="width:50%" type="segment" animated default-value="active">
-      <n-tab-pane name="active" tab="Faol foydalanuvchilar"> </n-tab-pane>
-      <n-tab-pane name="inactive" tab="Oddiy foydalanuvchilar"></n-tab-pane>
-    </n-tabs>
-
     {{ tabValue }}
+    <n-tabs
+      @update:value="tabChange"
+      style="width: 50%"
+      type="segment"
+      animated
+      default-value="active"
+    >
+      <n-tab-pane name="active" tab="yosh foydalanuvchilar"> </n-tab-pane>
+      <n-tab-pane name="inactive" tab="o'rtacha foydalanuvchilar"></n-tab-pane>
+    </n-tabs>
 
     <div class="search-input" style="width: 100%">
       <div class="search-input__unique">
@@ -123,7 +128,7 @@
     </pre> -->
 
     <n-grid :style="!toggleBtn && { display: 'none' }" :cols="3" :x-gap="16" :y-gap="16">
-      <n-grid-item v-for="user in usersStore.users" :key="user.id">
+      <n-grid-item v-for="user in filteredUsers" :key="user.age">
         <n-card style="width: 100%" @click="$router.push('/detail')">
           <template #header>
             <n-skeleton v-if="loading" text style="width: 90%; --n-text-width: 90%" />
@@ -146,14 +151,34 @@
                   </h3>
                 </span>
               </div>
-
+              <!-- card start  -->
               <div>
                 <p><strong>Email:</strong>{{ user.email }}</p>
                 <p><strong>city:</strong>{{ user.address.city }}</p>
                 <p><strong>address:</strong>{{ user.address.address }}</p>
-                <p><strong>weight:</strong>{{ user.weight }}</p>
+                <p><strong>birthdate:</strong>{{ user.birthDate }}</p>
+
+                <p v-if="user.weight < 60">
+                  <strong>weight:</strong>juda ozg'in {{ Math.round(user.weight) }}kg
+                </p>
+                <p v-else-if="user.weight > 60 && user.weight < 70">
+                  <strong>weight:</strong>o'rta vazn{{ Math.round(user.weight) }}kg
+                </p>
+                <p v-else-if="user.weight > 70 && user.weight < 80">
+                  <strong>weight:</strong>biroz tolaroq {{ Math.round(user.weight) }}kg
+                </p>
+                <p v-else>
+                  <strong>weight:</strong>semiz {{ Math.round(user.weight) }}kg
+                </p>
                 <p><strong>phone:</strong>{{ user.phone }}</p>
+                <p>
+                  <strong>age:</strong>{{ user.age <= 30 ? "hali yosh" : "o'rtacha" }}
+                </p>
+                <p>
+                  <strong>jinsi:</strong>{{ user?.gender == "male" ? "erkak" : "ayol" }}
+                </p>
               </div>
+              <!-- card end  -->
             </div>
           </template>
         </n-card>
@@ -164,20 +189,20 @@
       <n-table :bordered="false" :single-line="false">
         <thead>
           <tr>
-            <th>Abandon</th>
-            <th>Abnormal</th>
-            <th>Abolish</th>
-            <th>...</th>
-            <th>It's hard to learn words</th>
+            <th>FISH</th>
+            <th>Email</th>
+            <th>Yosh</th>
+            <th>jins</th>
+            <th>foydalanuvchi nomi</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>放弃</td>
-            <td>反常的</td>
-            <td>彻底废除</td>
-            <td>...</td>
-            <td>Damn it! I can't remember those words.</td>
+          <tr v-for="user in filteredUsers" :key="user.id">
+            <td>{{ user?.firstName + ", " + user?.lastName }}</td>
+            <td>{{ user?.email }}</td>
+            <td>{{ user?.age <= 30 ? `yosh ${user?.age}` : `qari ${user?.age}` }}</td>
+            <td>{{ user?.gender == "female" ? "ayol" : "erkak" }}</td>
+            <td>{{ user?.username }}</td>
           </tr>
           <tr>
             <td>...</td>
@@ -189,11 +214,29 @@
         </tbody>
       </n-table>
     </div>
+
+    <n-modal
+      v-model:show="showModal"
+      class="custom-card"
+      preset="card"
+      :style="bodyStyle"
+      title="Foydalanuvchi Nomi"
+      :bordered="false"
+      size="huge"
+      :segmented="segmented"
+    >
+      <div style="padding-top: 4px">
+        <n-input label="Ism" placeholder="Ism"> </n-input>
+        <n-input style="margin: 15px 0" label="yoshingiz" placeholder="yoshingiz">
+        </n-input>
+        <n-input label="Familya" placeholder="Familya"> </n-input>
+      </div>
+    </n-modal>
   </n-space>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import {
   NSpace,
   NCard,
@@ -211,7 +254,33 @@ import { useUsersStore } from "@/stores/usersStore.js";
 
 const usersStore = useUsersStore();
 
-const tabValue = ref("active")
+const tabValue = ref("active");
+
+const filteredUsers = ref([]);
+
+watch(tabValue, (newVal) => {
+  console.log("Tab o'zgardi:", newVal);
+  filteredUsers.value = usersStore.users.filter((user) => {
+    if (newVal === "active") {
+      return user.age <= 30;
+    } else if (newVal === "inactive") {
+      return user.age > 30;
+    }
+  });
+});
+
+const bodyStyle = {
+  width: "600px",
+};
+const segmented = {
+  content: "soft",
+  footer: "soft",
+};
+const showModal = ref(false);
+
+const showModalFunc = () => {
+  showModal.value = true;
+};
 
 const toggleBtn = ref(true);
 const loading = ref(false);
@@ -222,15 +291,24 @@ const handleClick = (v) => {
 };
 
 const tabChange = (e) => {
-  tabValue.value = e
-}
+  tabValue.value = e;
+};
 
-onMounted(() => {
+const x = ref(12);
+const y = ref(-3);
+const b = ref(0);
+
+b.value = x.value + y.value;
+console.log(b);
+
+onMounted(async () => {
   loading.value = true;
-  usersStore.fetchUsers();
+  await usersStore.fetchUsers();
   setTimeout(() => {
     loading.value = false;
   }, 2000);
+
+  filteredUsers.value = usersStore?.users?.filter((u) => u?.age <= 30);
 });
 </script>
 
