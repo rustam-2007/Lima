@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import AboutView from '@/pages/AboutView.vue'
 import HomeView from '@/pages/HomeView.vue'
+import HealthcareView from '@/pages/HealthcareView.vue'
 
 import NotFoundView from '@/pages/NotFoundView.vue'
 import LoginView from '@/pages/LoginView.vue'
@@ -23,6 +24,15 @@ const routes = [
       LeftSidebar: () => import('@/components/SidebarMenuComponent.vue'),
       TopNavbar: () => import('@/components/NavbarComponent.vue'),
       default: () => import('@/pages/AboutView.vue'),
+    },
+  },
+  {
+    path: '/healthcare',
+    name: 'healthcare',
+    components: {
+      LeftSidebar: () => import('@/components/SidebarMenuComponent.vue'),
+      TopNavbar: () => import('@/components/NavbarComponent.vue'),
+      default: () => import('@/pages/HealthcareView.vue'),
     },
   },
   {
