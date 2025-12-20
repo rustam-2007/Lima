@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import AboutView from '@/pages/AboutView.vue'
 import HomeView from '@/pages/HomeView.vue'
-
+import Vacansies from '@/pages/VacansiesView.vue'
 import NotFoundView from '@/pages/NotFoundView.vue'
 import LoginView from '@/pages/LoginView.vue'
 
@@ -33,6 +33,24 @@ const routes = [
       TopNavbar: () => import('@/components/NavbarComponent.vue'),
       default: () => import('@/pages/DetailView.vue'),
     },
+  },
+   {
+    path: '/vacancies',
+    name: 'vacancies',
+    components:{
+      LeftSidebar: () => import('@/components/SidebarMenuComponent.vue'),
+      TopNavbar: () => import('@/components/NavbarComponent.vue'),
+      default: () => import('@/pages/VacansiesView.vue'),
+    }
+  },
+  {
+    path: '/vacancies/:itemId',
+    name: 'vacancy-detail',
+    components:{
+      LeftSidebar: () => import('@/components/SidebarMenuComponent.vue'),
+      TopNavbar: () => import('@/components/NavbarComponent.vue'),
+      default: () => import('@/pages/VacancyView.vue'),
+    }
   },
   {
     path: '/login',
