@@ -104,6 +104,8 @@
         </n-button>
       </div>
 
+      <!-- {{ clickedUser }} -->
+
       <div class="search-input__child">
         <n-button
           style="margin-right: 5px"
@@ -124,7 +126,7 @@
 
     <n-grid :style="!toggleBtn && { display: 'none' }" :cols="3" :x-gap="16" :y-gap="16">
       <n-grid-item v-for="user in filteredUsers" :key="user.age">
-        <n-card style="width: 100%" @click="$router.push('/detail')">
+        <n-card style="width: 100%" @click="showModalDetailFunc(user)">
           <template #header>
             <n-skeleton v-if="loading" text style="width: 90%; --n-text-width: 90%" />
           </template>
@@ -204,7 +206,7 @@
       class="custom-card"
       preset="card"
       :style="bodyStyle"
-      title="Foydalanuvchi Nomi"
+      title="Modal"
       :bordered="false"
       size="huge"
       :segmented="segmented"
@@ -214,6 +216,22 @@
         <n-input style="margin: 15px 0" label="yoshingiz" placeholder="yoshingiz"> </n-input>
         <n-input label="Familya" placeholder="Familya"> </n-input>
       </div>
+    </n-modal>
+
+    <n-modal
+      v-model:show="showModalDetail"
+      class="custom-card"
+      preset="card"
+      :style="bodyStyle"
+      :title="clickedUser?.firstName"
+      :bordered="false"
+      size="huge"
+      :segmented="segmented"
+    >
+      <h1>{{ clickedUser?.firstName }} - {{ clickedUser.lastName }}</h1>
+      <h1>{{ clickedUser?.email }} - {{ clickedUser.phone }}</h1>
+
+      <template #footer> Footer </template>
     </n-modal>
   </n-space>
 </template>
@@ -240,6 +258,12 @@ const usersStore = useUsersStore()
 const tabValue = ref('active')
 
 const filteredUsers = ref([])
+const clickedUser = ref(null)
+
+const showModalDetailFunc = (user) => {
+  showModalDetail.value = true
+  clickedUser.value = user
+}
 
 watch(tabValue, (newVal) => {
   console.log("Tab o'zgardi:", newVal)
@@ -260,6 +284,7 @@ const segmented = {
   footer: 'soft',
 }
 const showModal = ref(false)
+const showModalDetail = ref(false)
 
 const showModalFunc = () => {
   showModal.value = true
