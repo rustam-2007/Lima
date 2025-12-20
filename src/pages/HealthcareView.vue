@@ -1,6 +1,5 @@
 <template>
   <div class="px-8 py-8">
-    {{ toggle }}
     <n-breadcrumb separator=">">
       <n-breadcrumb-item>
         <n-icon><MdCash /></n-icon> Home
@@ -20,21 +19,19 @@
       <n-form-item> </n-form-item>
     </n-form>
 
-    <n-card title="Card" hoverable>
+    <n-card
+      :title="user.firstName + ' ' + user.lastName"
+      hoverable
+      v-for="user in usersStore.users"
+      :key="user.id"
+      class="mb-4 flex justify-content-wrap"
+    >
       <template #header-extra>
-        <n-icon size="22" style="cursor: pointer">
-          <svg v-if="toggle" @click="detailData" viewBox="0 0 512 512">
-            <path
-              fill="none"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="48"
-              d="M184 112l144 144-144 144"
-            />
-          </svg>
-
-          <svg v-else @click="detailData" viewBox="0 0 512 512" style="transform: rotate(90deg)">
+        <n-icon size="22" style="cursor: pointer" @click="toggleCard(user.id)">
+          <svg
+            viewBox="0 0 512 512"
+            :style="{ transform: isOpen(user.id) ? 'rotate(90deg)' : 'rotate(0deg)' }"
+          >
             <path
               fill="none"
               stroke="currentColor"
@@ -47,39 +44,52 @@
         </n-icon>
       </template>
 
-      <p v-show="!toggle">
-        Amerika Qoʻshma Shtatlari (AQSh; inglizcha: United States of America, USA), Qoʻshma Shtatlar
-        (inglizcha: United States) yoki shunchaki Amerika (inglizcha: America) Shimoliy Amerikada
-        joylashgan davlat. Poytaxti – Vashington shahri, Birlashgan Millatlar Tashkiloti aʼzosi.
-        Amerika Qoʻshma Shtatlari sharqdan Atlantika, gʻarbdan Tinch okeani, janubi-sharqdan Meksika
-        qoʻltigʻi bilan oʻralgan. Maʼmuriy jihatdan 50 shtat va bir federal okrugga boʻlinadi.
-        Alyaska va Gavayi shtatlari mamlakat asosiy hududidan tashqarida joylashgan. Puerto-Riko
-        Hamdoʻstligi, Shimoliy Mariana orollari Hamdoʻstligi, Guam, Virjiniya orollari va Amerika
-        Samoasi ham Amerika Qoʻshma Shtatlariga qarashli. Maydoni – 3 796 742 sq milya (9 833 520
-        km2). Aholisi – 347 275 807 kishi (2025-yil 8-yanvar) dan oshiq boʻlib, aholi soni boʻyicha
-        jahonda 3-oʻrinda turadi. Tarixi
-      </p>
+      <div v-show="isOpen(user.id)" class="user-details">
+        <div><span>First name:</span> {{ user.firstName }}</div>
+        <div><span>Last name:</span> {{ user.lastName }}</div>
+        <div><span>Email:</span> {{ user.email }}</div>
+        <div><span>Phone:</span> {{ user.phone }}</div>
+        <div><span>Height:</span> {{ user.height }}</div>
+        <div><span>Weight:</span> {{ user.weight }}</div>
+        <div><span>Blood group:</span> {{ user.bloodGroup }}</div>
+
+        <div><span>Address:</span> {{ user.address.address }}</div>
+        <div><span>City:</span> {{ user.address.city }}</div>
+        <div><span>State:</span> {{ user.address.state }}</div>
+        <div><span>Postal code:</span> {{ user.address.postalCode }}</div>
+
+        <div><span>Company:</span> {{ user.company.name }}</div>
+        <div><span>Department:</span> {{ user.company.department }}</div>
+        <div><span>Title:</span> {{ user.company.title }}</div>
+        <div><span>Company address:</span> {{ user.company.address }}</div>
+        <div><span>maiden Name:</span>{{ user.maidenName }}</div>
+        <div><span>age:</span> {{ user.age }}</div>
+        <div><span>gender:</span> {{ user.gender }}</div>
+        <div><span>username:</span> {{ user.username }}</div>
+        <div><span>birthDate:</span> {{ user.birthDate }}</div>
+        <div><span>domain:</span> {{ user.domain }}</div>
+        <div><span>ip:</span> {{ user.ip }}</div>
+        <div><span>macAddress:</span> {{ user.macAddress }}</div>
+        <div><span>university:</span> {{ user.university }}</div>
+        <div><span>ein:</span> {{ user.ein }}</div>
+        <div><span>ssn:</span> {{ user.ssn }}</div>
+      </div>
     </n-card>
-    <n-tabs
-      v-model:value="active"
-      type="segment"
-      :tabs-padding="0"
-      size="large"
-      :pane-style="{ padding: '0' }"
-      class="custom-tabs"
-    >
-      <n-tab name="aptek">Аптеки</n-tab>
-      <n-tab name="boln">Больницы</n-tab>
-    </n-tabs>
   </div>
 </template>
 
 <script setup>
-const toggle = ref(false)
-const detailData = () => {
-  console.log('clicked')
-  toggle.value = !toggle.value
+const openIds = ref([])
+
+const toggleCard = (id) => {
+  if (openIds.value.includes(id)) {
+    openIds.value = openIds.value.filter((i) => i !== id)
+  } else {
+    openIds.value.push(id)
+  }
 }
+
+const isOpen = (id) => openIds.value.includes(id)
 
 const active = ref('boln') // default tanlangan tab
 const tab = ref('all')
@@ -117,8 +127,15 @@ function handleValidateClick(e) {
     }
   })
 }
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
+import { useUsersStore } from '@/stores/usersStore.js'
+const usersStore = useUsersStore()
+
 const activeTab = ref('all')
+
+onMounted(() => {
+  usersStore.fetchUsers()
+})
 </script>
 <style scoped>
 .n-card {

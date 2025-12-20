@@ -1,7 +1,7 @@
 <script setup>
 import { RouterView } from 'vue-router'
 import { ref, provide } from 'vue'
-import { darkTheme, NConfigProvider, useMessage, NMessageProvider } from 'naive-ui'
+import { darkTheme, NConfigProvider } from 'naive-ui'
 
 const isDark = ref(false)
 provide('isDark', isDark)
@@ -23,10 +23,11 @@ const themeOverrides = {
     colorFocus: '#22c55e',
   },
   Tabs: {
-    tabTextColor: '#000',
-    tabTextColorActive: '#22c55e',
-    tabBorder: '1px solid #e5e7eb',
-    tabBorderActive: '1px solid #22c55e',
+    tabColorSegment: '#3D7BF7', // active tab background
+    tabBorderColor: '#3D7BF7',
+    tabTextColorActive: '#ffffff', // ACTIVE matn
+    tabTextColor: '#000000', // INACTIVE matn
+    tabTextColorHover: '#000000',
   },
 }
 </script>
