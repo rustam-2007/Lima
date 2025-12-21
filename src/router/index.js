@@ -74,7 +74,17 @@ const routes = [
     name: 'not-found',
     component: NotFoundView,
   },
+    {
+       path: '/detailpage/:id',
+    name: 'detailpage',
+    components: {
+      LeftSidebar: () => import('@/components/SidebarMenuComponent.vue'),
+      TopNavbar: () => import('@/components/NavbarComponent.vue'),
+      default: () => import('@/pages/DetailPageView.vue'),
+    }
+    },
 ]
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

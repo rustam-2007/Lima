@@ -27,6 +27,13 @@
                 : "Kelishiladi"
             }}
           </td>
+          <td>
+            {{
+              vacancy.username?.from
+                ? vacancy.username.from + " " + vacancy.username.currency
+                : "foydalanuvchi nomi"
+            }}
+          </td>
           <td>{{ vacancy.schedule?.name }}</td>
         </tr>
       </tbody>
